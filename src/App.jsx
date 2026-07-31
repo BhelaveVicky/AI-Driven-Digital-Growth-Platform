@@ -6,6 +6,9 @@ import WhatsAppButton from './components/WhatsAppButton';
 
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
+import Report from './pages/Report';
+import Competitor from './pages/Competitor';
+import Chat from './pages/Chat';
 import Pricing from './pages/Pricing';
 import Referral from './pages/Referral';
 import Contact from './pages/Contact';
@@ -31,6 +34,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/analysis" element={<Analysis />} />
+            <Route path="/report" element={<Report />} />
+            <Route path="/competitor" element={<Competitor />} />
+            <Route path="/chat" element={<Chat />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/referral" element={<Referral />} />
             <Route path="/contact" element={<Contact />} />

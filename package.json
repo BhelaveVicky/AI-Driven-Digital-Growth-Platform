@@ -4,23 +4,24 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
+    "dev": "tsx server.ts",
+    "client": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@google/genai": "^2.4.0",
-    "@tailwindcss/vite": "^4.3.3",
+    "@google/genai": "^2.15.0",
+    "@tailwindcss/vite": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
-    "dotenv": "^17.2.3",
-    "express": "^4.21.2",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
     "lucide-react": "^0.546.0",
-    "motion": "^12.43.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.2"
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "react-router-dom": "^7.18.2",
+    "vite": "^6.2.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
@@ -28,8 +29,8 @@
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
     "tailwindcss": "^4.1.14",
-    "tsx": "^4.21.0",
+    "tsx": "^4.23.1",
     "typescript": "~5.8.2",
-    "vite": "^6.4.3"
+    "vite": "^6.2.3"
   }
 }
