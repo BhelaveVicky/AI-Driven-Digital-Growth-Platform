@@ -63,8 +63,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-bold text-white text-base">Call / Support</p>
-                  <p className="text-slate-300 font-mono mt-0.5">+91 98765 43210</p>
-                  <p className="text-slate-500 text-xs mt-0.5">Mon - Sat: 9:00 AM - 8:00 PM IST</p>
+                  <p className="text-slate-300 font-mono mt-0.5">+91 1234567890</p>
+                  <p className="text-slate-500 text-xs mt-0.5">All time</p>
                 </div>
               </div>
 
@@ -74,7 +74,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-bold text-white text-base">Email Inquiries</p>
-                  <p className="text-slate-300 font-mono mt-0.5">growth@aistudio.dev</p>
+                  <p className="text-slate-300 font-mono mt-0.5">abcd@gmail.com</p>
                   <p className="text-slate-500 text-xs mt-0.5">Response within 2 hours</p>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function Contact() {
                       type="tel"
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      placeholder="e.g. +91 98765 43210"
+                      placeholder="e.g. +91 1234567890"
                       className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none"
                     />
                   </div>

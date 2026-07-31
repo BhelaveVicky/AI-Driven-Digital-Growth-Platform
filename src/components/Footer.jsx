@@ -110,7 +110,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5 text-slate-300">
                 <Mail className="w-4 h-4 text-indigo-400 mt-1 shrink-0" />
-                <span>growth@aistudio.dev</span>
+                <span>abcd@gmail.com</span>
               </li>
               <li className="flex items-start gap-2.5 text-slate-300">
                 <MapPin className="w-4 h-4 text-indigo-400 mt-1 shrink-0" />
