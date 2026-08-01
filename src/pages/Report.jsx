@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { 
   Sparkles, 
   Building, 
@@ -22,12 +23,13 @@ import {
 export default function Report() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   const [reportData, setReportData] = useState(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // Check router state first, fallback to localStorage
     if (location.state?.report) {
       setReportData(location.state);
     } else {
@@ -44,14 +46,18 @@ export default function Report() {
 
   if (!reportData || !reportData.report) {
     return (
-      <div className="min-h-screen bg-slate-950 pt-32 pb-20 text-white flex items-center justify-center px-4">
-        <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center space-y-6 shadow-2xl">
-          <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mx-auto border border-indigo-500/20">
-            <Sparkles className="w-8 h-8 text-cyan-400 animate-pulse" />
+      <div className={`min-h-screen pt-32 pb-20 flex items-center justify-center px-4 transition-colors duration-300 ${
+        isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'
+      }`}>
+        <div className={`max-w-md w-full border rounded-3xl p-8 text-center space-y-6 shadow-2xl ${
+          isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+        }`}>
+          <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mx-auto border border-indigo-500/20">
+            <Sparkles className="w-8 h-8 text-indigo-500 animate-pulse" />
           </div>
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-white">No Growth Report Found</h2>
-            <p className="text-slate-400 text-sm">
+            <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>No Growth Report Found</h2>
+            <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               Please submit your business details first to let Gemini AI generate a personalized growth strategy report.
             </p>
           </div>
@@ -105,14 +111,18 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 pt-28 pb-20 text-white print:bg-white print:text-slate-900 print:pt-0 print:pb-0">
+    <div className={`min-h-screen pt-28 pb-20 transition-colors duration-300 print:bg-white print:text-slate-900 print:pt-0 print:pb-0 ${
+      isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'
+    }`}>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
         {/* Top Control Bar (Hidden on print) */}
         <div className="flex flex-wrap items-center justify-between gap-4 print:hidden">
           <button
             onClick={() => navigate('/analysis')}
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm font-medium transition-colors"
+            className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
+              isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-indigo-600'
+            }`}
           >
             <ArrowLeft className="w-4 h-4" /> Back to Analysis Form
           </button>
@@ -120,23 +130,27 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
           <div className="flex items-center gap-3">
             <button
               onClick={handleCopy}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-semibold transition-all"
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border text-xs font-semibold transition-all ${
+                isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800' : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100 shadow-sm'
+              }`}
             >
-              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-indigo-400" />}
+              {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-indigo-500" />}
               {copied ? 'Copied!' : 'Copy Text'}
             </button>
             <button
               onClick={handlePrint}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-semibold transition-all"
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border text-xs font-semibold transition-all ${
+                isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800' : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100 shadow-sm'
+              }`}
             >
-              <Printer className="w-4 h-4 text-cyan-400" />
+              <Printer className="w-4 h-4 text-cyan-500" />
               Print / Save PDF
             </button>
             <a
               href={`https://wa.me/919876543210?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md shadow-emerald-600/20"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold transition-all shadow-md shadow-emerald-600/20"
             >
               <Share2 className="w-4 h-4" />
               Share on WhatsApp
@@ -145,39 +159,53 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
         </div>
 
         {/* MAIN REPORT CARD */}
-        <div className="bg-slate-900 print:bg-white print:border-none print:shadow-none border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-10 shadow-2xl">
+        <div className={`border rounded-3xl p-6 sm:p-10 space-y-10 shadow-2xl print:bg-white print:border-none print:shadow-none transition-colors ${
+          isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-slate-200/50'
+        }`}>
           
           {/* Header & Business Score Banner */}
-          <div className="border-b border-slate-800 print:border-slate-300 pb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className={`border-b pb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 ${
+            isDark ? 'border-slate-800' : 'border-slate-200'
+          }`}>
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 print:text-indigo-700 text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-bold uppercase tracking-wider ${
+                isDark ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-300' : 'bg-indigo-50 border-indigo-200 text-indigo-700'
+              }`}>
+                <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
                 Gemini AI Digital Strategy Audit
               </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-white print:text-slate-900 tracking-tight">
+              <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
+                isDark ? 'text-white' : 'text-slate-900'
+              }`}>
                 {businessDetails?.businessName || 'Business Audit Report'}
               </h1>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-400 print:text-slate-600 text-sm">
+              <div className={`flex flex-wrap items-center gap-x-4 gap-y-1 text-sm ${
+                isDark ? 'text-slate-400' : 'text-slate-600'
+              }`}>
                 <span className="flex items-center gap-1">
-                  <Building className="w-4 h-4 text-indigo-400" />
+                  <Building className="w-4 h-4 text-indigo-500" />
                   {businessDetails?.businessCategory || 'General Category'}
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4 text-cyan-400" />
+                  <MapPin className="w-4 h-4 text-cyan-500" />
                   {businessDetails?.location || 'Local Market'}
                 </span>
                 <span>•</span>
-                <span>Owner: <strong className="text-slate-200 print:text-slate-800">{businessDetails?.ownerName || 'N/A'}</strong></span>
+                <span>Owner: <strong className={isDark ? 'text-slate-200' : 'text-slate-800'}>{businessDetails?.ownerName || 'N/A'}</strong></span>
               </div>
             </div>
 
             {/* Score Box */}
-            <div className="bg-slate-950 print:bg-slate-100 p-5 rounded-2xl border border-slate-800 print:border-slate-300 text-center min-w-[150px] shrink-0">
-              <span className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400 print:text-emerald-700">
+            <div className={`p-5 rounded-2xl border text-center min-w-[150px] shrink-0 ${
+              isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'
+            }`}>
+              <span className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-cyan-500 to-indigo-500">
                 {report.score || 88}/100
               </span>
-              <p className="text-xs font-semibold text-slate-400 print:text-slate-600 uppercase tracking-wider mt-1">
+              <p className={`text-xs font-semibold uppercase tracking-wider mt-1 ${
+                isDark ? 'text-slate-400' : 'text-slate-500'
+              }`}>
                 AI Readiness Score
               </p>
             </div>
@@ -185,36 +213,46 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
 
           {/* SECTION 1: BUSINESS OVERVIEW */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white print:text-slate-900 flex items-center gap-2 border-l-4 border-indigo-500 pl-3">
-              <Building className="w-5 h-5 text-indigo-400" />
+            <h2 className={`text-xl font-bold flex items-center gap-2 border-l-4 border-indigo-500 pl-3 ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}>
+              <Building className="w-5 h-5 text-indigo-500" />
               1. Business Overview & Executive Summary
             </h2>
-            <div className="bg-slate-950/60 print:bg-slate-50 border border-slate-800/80 print:border-slate-200 rounded-2xl p-5 text-slate-300 print:text-slate-800 text-sm leading-relaxed">
+            <div className={`border rounded-2xl p-5 text-sm leading-relaxed ${
+              isDark ? 'bg-slate-950/60 border-slate-800/80 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+            }`}>
               {report.summary || 'Based on the provided details, your business has strong core potential in its local demographic. By optimizing digital customer touchpoints, setting up automated lead intake, and targeting high-intent local search queries, revenue can scale significantly.'}
             </div>
           </div>
 
           {/* SECTION 2: PROBLEMS & BOTTLENECKS */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white print:text-slate-900 flex items-center gap-2 border-l-4 border-rose-500 pl-3">
-              <AlertTriangle className="w-5 h-5 text-rose-400" />
+            <h2 className={`text-xl font-bold flex items-center gap-2 border-l-4 border-rose-500 pl-3 ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}>
+              <AlertTriangle className="w-5 h-5 text-rose-500" />
               2. Stated Problems & Identified Bottlenecks
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {report.problems && report.problems.length > 0 ? (
                 report.problems.map((prob, idx) => (
-                  <div key={idx} className="bg-slate-950/60 print:bg-slate-50 border border-slate-800/80 print:border-slate-200 rounded-2xl p-5 space-y-2">
+                  <div key={idx} className={`border rounded-2xl p-5 space-y-2 ${
+                    isDark ? 'bg-slate-950/60 border-slate-800/80' : 'bg-slate-50 border-slate-200'
+                  }`}>
                     <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-bold text-rose-300 print:text-rose-700">{prob.issue}</h3>
-                      <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                      <h3 className="text-sm font-bold text-rose-500">{prob.issue}</h3>
+                      <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-rose-500/10 text-rose-600 border border-rose-500/20">
                         {prob.impact || 'High Impact'}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 print:text-slate-700 leading-relaxed">{prob.explanation}</p>
+                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{prob.explanation}</p>
                   </div>
                 ))
               ) : (
-                <div className="col-span-2 bg-slate-950/60 p-4 rounded-2xl text-xs text-slate-400">
+                <div className={`col-span-2 p-4 rounded-2xl text-xs border ${
+                  isDark ? 'bg-slate-950/60 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'
+                }`}>
                   Main Challenge: {businessDetails?.businessProblems || 'Low digital conversion and offline dependency.'}
                 </div>
               )}
@@ -223,24 +261,30 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
 
           {/* SECTION 3: WEBSITE SUGGESTIONS */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white print:text-slate-900 flex items-center gap-2 border-l-4 border-cyan-500 pl-3">
-              <Globe className="w-5 h-5 text-cyan-400" />
+            <h2 className={`text-xl font-bold flex items-center gap-2 border-l-4 border-cyan-500 pl-3 ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}>
+              <Globe className="w-5 h-5 text-cyan-500" />
               3. High-Converting Website Suggestions
             </h2>
-            <div className="bg-slate-950/60 print:bg-slate-50 border border-slate-800/80 print:border-slate-200 rounded-2xl p-5 space-y-3">
-              <p className="text-xs text-slate-400 print:text-slate-600 font-semibold uppercase tracking-wider">
+            <div className={`border rounded-2xl p-5 space-y-3 ${
+              isDark ? 'bg-slate-950/60 border-slate-800/80' : 'bg-slate-50 border-slate-200'
+            }`}>
+              <p className={`text-xs font-semibold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                 Status: {businessDetails?.websiteRequirement || 'New Website Recommended'}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {report.websiteSuggestions && report.websiteSuggestions.length > 0 ? (
                   report.websiteSuggestions.map((sug, idx) => (
-                    <div key={idx} className="flex items-start gap-3 bg-slate-900/80 print:bg-white p-3.5 rounded-xl border border-slate-800 print:border-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                      <p className="text-xs text-slate-300 print:text-slate-800">{sug}</p>
+                    <div key={idx} className={`flex items-start gap-3 p-3.5 rounded-xl border ${
+                      isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'
+                    }`}>
+                      <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <p className="text-xs">{sug}</p>
                     </div>
                   ))
                 ) : (
-                  <p className="text-xs text-slate-400">Build a lightning-fast responsive website with sticky WhatsApp CTA, online scheduling, and social proof gallery.</p>
+                  <p className="text-xs text-slate-500">Build a lightning-fast responsive website with sticky WhatsApp CTA, online scheduling, and social proof gallery.</p>
                 )}
               </div>
             </div>
@@ -248,20 +292,26 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
 
           {/* SECTION 4: SEO STRATEGY */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white print:text-slate-900 flex items-center gap-2 border-l-4 border-purple-500 pl-3">
-              <Search className="w-5 h-5 text-purple-400" />
+            <h2 className={`text-xl font-bold flex items-center gap-2 border-l-4 border-purple-500 pl-3 ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}>
+              <Search className="w-5 h-5 text-purple-500" />
               4. Hyper-Local SEO & Keyword Strategy
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {report.seoStrategy && report.seoStrategy.length > 0 ? (
                 report.seoStrategy.map((seo, idx) => (
-                  <div key={idx} className="bg-slate-950/60 print:bg-slate-50 border border-slate-800/80 print:border-slate-200 rounded-2xl p-5 space-y-3">
-                    <h3 className="text-sm font-bold text-purple-300 print:text-purple-800">{seo.tactic}</h3>
-                    <p className="text-xs text-slate-400 print:text-slate-700 leading-relaxed">{seo.details}</p>
+                  <div key={idx} className={`border rounded-2xl p-5 space-y-3 ${
+                    isDark ? 'bg-slate-950/60 border-slate-800/80' : 'bg-slate-50 border-slate-200'
+                  }`}>
+                    <h3 className="text-sm font-bold text-purple-600 dark:text-purple-300">{seo.tactic}</h3>
+                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{seo.details}</p>
                     {seo.keywords && (
                       <div className="flex flex-wrap gap-1.5 pt-1">
                         {seo.keywords.map((kw, kIdx) => (
-                          <span key={kIdx} className="text-[11px] bg-purple-500/10 text-purple-300 print:bg-purple-100 print:text-purple-800 px-2.5 py-0.5 rounded-full border border-purple-500/20">
+                          <span key={kIdx} className={`text-[11px] px-2.5 py-0.5 rounded-full border ${
+                            isDark ? 'bg-purple-500/10 text-purple-300 border-purple-500/20' : 'bg-purple-50 text-purple-700 border-purple-200'
+                          }`}>
                             #{kw}
                           </span>
                         ))}
@@ -270,7 +320,9 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
                   </div>
                 ))
               ) : (
-                <div className="col-span-2 bg-slate-950/60 p-4 rounded-2xl text-xs text-slate-400">
+                <div className={`col-span-2 p-4 rounded-2xl text-xs border ${
+                  isDark ? 'bg-slate-950/60 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'
+                }`}>
                   Target local long-tail keywords in {businessDetails?.location} to dominate Google Maps 3-Pack rankings.
                 </div>
               )}
@@ -279,25 +331,31 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
 
           {/* SECTION 5: MARKETING PLAN */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white print:text-slate-900 flex items-center gap-2 border-l-4 border-emerald-500 pl-3">
-              <Megaphone className="w-5 h-5 text-emerald-400" />
+            <h2 className={`text-xl font-bold flex items-center gap-2 border-l-4 border-emerald-500 pl-3 ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}>
+              <Megaphone className="w-5 h-5 text-emerald-500" />
               5. Digital Marketing Plan & Channel Strategy
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {report.marketingPlan && report.marketingPlan.length > 0 ? (
                 report.marketingPlan.map((mkt, idx) => (
-                  <div key={idx} className="bg-slate-950/60 print:bg-slate-50 border border-slate-800/80 print:border-slate-200 rounded-2xl p-5 space-y-2">
+                  <div key={idx} className={`border rounded-2xl p-5 space-y-2 ${
+                    isDark ? 'bg-slate-950/60 border-slate-800/80' : 'bg-slate-50 border-slate-200'
+                  }`}>
                     <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-bold text-emerald-300 print:text-emerald-800">{mkt.channel}</h3>
-                      <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                      <h3 className="text-sm font-bold text-emerald-600 dark:text-emerald-300">{mkt.channel}</h3>
+                      <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded">
                         {mkt.expectedRoi || 'High ROI'}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 print:text-slate-700 leading-relaxed">{mkt.strategy}</p>
+                    <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{mkt.strategy}</p>
                   </div>
                 ))
               ) : (
-                <div className="col-span-2 bg-slate-950/60 p-4 rounded-2xl text-xs text-slate-400">
+                <div className={`col-span-2 p-4 rounded-2xl text-xs border ${
+                  isDark ? 'bg-slate-950/60 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'
+                }`}>
                   Deploy targeted social media ad campaigns with automated WhatsApp lead routing.
                 </div>
               )}
@@ -306,33 +364,41 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
 
           {/* SECTION 6: GROWTH RECOMMENDATIONS */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white print:text-slate-900 flex items-center gap-2 border-l-4 border-amber-500 pl-3">
-              <TrendingUp className="w-5 h-5 text-amber-400" />
+            <h2 className={`text-xl font-bold flex items-center gap-2 border-l-4 border-amber-500 pl-3 ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}>
+              <TrendingUp className="w-5 h-5 text-amber-500" />
               6. Top Growth Recommendations & Next Steps
             </h2>
             <div className="space-y-2.5">
               {report.growthRecommendations && report.growthRecommendations.length > 0 ? (
                 report.growthRecommendations.map((rec, idx) => (
-                  <div key={idx} className="flex items-start gap-3 bg-slate-950/80 print:bg-slate-50 p-4 rounded-xl border border-slate-800/80 print:border-slate-200">
-                    <div className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                  <div key={idx} className={`flex items-start gap-3 p-4 rounded-xl border ${
+                    isDark ? 'bg-slate-950/80 border-slate-800/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-800'
+                  }`}>
+                    <div className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
                       {idx + 1}
                     </div>
-                    <p className="text-sm text-slate-200 print:text-slate-800">{rec}</p>
+                    <p className="text-sm">{rec}</p>
                   </div>
                 ))
               ) : (
-                <p className="text-xs text-slate-400">Implement responsive website, setup local SEO, and start daily customer messaging automation.</p>
+                <p className="text-xs text-slate-500">Implement responsive website, setup local SEO, and start daily customer messaging automation.</p>
               )}
             </div>
           </div>
 
           {/* Bottom Call to Action (Hidden on print) */}
-          <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden">
+          <div className={`pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden ${
+            isDark ? 'border-slate-800' : 'border-slate-200'
+          }`}>
             <Link
               to="/analysis"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-semibold transition-all w-full sm:w-auto justify-center"
+              className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl border text-xs font-semibold transition-all w-full sm:w-auto justify-center ${
+                isDark ? 'bg-slate-950 hover:bg-slate-800 text-slate-300 border-slate-800' : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+              }`}
             >
-              <RefreshCw className="w-4 h-4 text-indigo-400" />
+              <RefreshCw className="w-4 h-4 text-indigo-500" />
               Run Another Analysis
             </Link>
 
@@ -340,7 +406,7 @@ ${report.growthRecommendations?.map(r => `- ${r}`).join('\n') || 'N/A'}`;
               href={`https://wa.me/919876543210?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:opacity-95 text-white font-bold text-sm shadow-xl shadow-emerald-500/20 w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-xl shadow-emerald-500/20 w-full sm:w-auto justify-center"
             >
               <MessageSquare className="w-4 h-4" />
               Consult Specialist to Execute Report Roadmap

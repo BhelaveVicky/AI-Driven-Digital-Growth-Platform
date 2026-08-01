@@ -1,50 +1,60 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function FeatureCard({ title, description, icon: Icon, badge, color = 'indigo', onClick }) {
-  // Color theme map for cards
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  // Color theme map for cards in Dark and Light modes
   const colorStyles = {
     indigo: {
-      bg: 'from-indigo-500/10 to-indigo-600/5',
-      border: 'border-indigo-500/20 group-hover:border-indigo-500/50',
-      iconBg: 'bg-indigo-500/20 text-indigo-400',
-      badgeBg: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/20',
-      btnText: 'text-indigo-400 group-hover:text-indigo-300'
+      bgDark: 'from-indigo-500/10 to-indigo-600/5 bg-slate-900/80 border-indigo-500/20 hover:border-indigo-500/50',
+      bgLight: 'from-indigo-50/80 to-white bg-white border-slate-200 hover:border-indigo-300 hover:shadow-indigo-500/10',
+      iconBg: 'bg-indigo-500/20 text-indigo-500',
+      badgeBgDark: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/20',
+      badgeBgLight: 'bg-indigo-100 text-indigo-700 border-indigo-200',
+      btnText: 'text-indigo-500 hover:text-indigo-600'
     },
     cyan: {
-      bg: 'from-cyan-500/10 to-blue-600/5',
-      border: 'border-cyan-500/20 group-hover:border-cyan-500/50',
-      iconBg: 'bg-cyan-500/20 text-cyan-400',
-      badgeBg: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20',
-      btnText: 'text-cyan-400 group-hover:text-cyan-300'
+      bgDark: 'from-cyan-500/10 to-blue-600/5 bg-slate-900/80 border-cyan-500/20 hover:border-cyan-500/50',
+      bgLight: 'from-cyan-50/80 to-white bg-white border-slate-200 hover:border-cyan-300 hover:shadow-cyan-500/10',
+      iconBg: 'bg-cyan-500/20 text-cyan-500',
+      badgeBgDark: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20',
+      badgeBgLight: 'bg-cyan-100 text-cyan-700 border-cyan-200',
+      btnText: 'text-cyan-600 hover:text-cyan-700'
     },
     purple: {
-      bg: 'from-purple-500/10 to-pink-600/5',
-      border: 'border-purple-500/20 group-hover:border-purple-500/50',
-      iconBg: 'bg-purple-500/20 text-purple-400',
-      badgeBg: 'bg-purple-500/10 text-purple-300 border-purple-500/20',
-      btnText: 'text-purple-400 group-hover:text-purple-300'
+      bgDark: 'from-purple-500/10 to-pink-600/5 bg-slate-900/80 border-purple-500/20 hover:border-purple-500/50',
+      bgLight: 'from-purple-50/80 to-white bg-white border-slate-200 hover:border-purple-300 hover:shadow-purple-500/10',
+      iconBg: 'bg-purple-500/20 text-purple-500',
+      badgeBgDark: 'bg-purple-500/10 text-purple-300 border-purple-500/20',
+      badgeBgLight: 'bg-purple-100 text-purple-700 border-purple-200',
+      btnText: 'text-purple-600 hover:text-purple-700'
     },
     emerald: {
-      bg: 'from-emerald-500/10 to-teal-600/5',
-      border: 'border-emerald-500/20 group-hover:border-emerald-500/50',
-      iconBg: 'bg-emerald-500/20 text-emerald-400',
-      badgeBg: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20',
-      btnText: 'text-emerald-400 group-hover:text-emerald-300'
+      bgDark: 'from-emerald-500/10 to-teal-600/5 bg-slate-900/80 border-emerald-500/20 hover:border-emerald-500/50',
+      bgLight: 'from-emerald-50/80 to-white bg-white border-slate-200 hover:border-emerald-300 hover:shadow-emerald-500/10',
+      iconBg: 'bg-emerald-500/20 text-emerald-500',
+      badgeBgDark: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20',
+      badgeBgLight: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+      btnText: 'text-emerald-600 hover:text-emerald-700'
     },
     amber: {
-      bg: 'from-amber-500/10 to-orange-600/5',
-      border: 'border-amber-500/20 group-hover:border-amber-500/50',
-      iconBg: 'bg-amber-500/20 text-amber-400',
-      badgeBg: 'bg-amber-500/10 text-amber-300 border-amber-500/20',
-      btnText: 'text-amber-400 group-hover:text-amber-300'
+      bgDark: 'from-amber-500/10 to-orange-600/5 bg-slate-900/80 border-amber-500/20 hover:border-amber-500/50',
+      bgLight: 'from-amber-50/80 to-white bg-white border-slate-200 hover:border-amber-300 hover:shadow-amber-500/10',
+      iconBg: 'bg-amber-500/20 text-amber-500',
+      badgeBgDark: 'bg-amber-500/10 text-amber-300 border-amber-500/20',
+      badgeBgLight: 'bg-amber-100 text-amber-800 border-amber-200',
+      btnText: 'text-amber-600 hover:text-amber-700'
     },
     rose: {
-      bg: 'from-rose-500/10 to-pink-600/5',
-      border: 'border-rose-500/20 group-hover:border-rose-500/50',
-      iconBg: 'bg-rose-500/20 text-rose-400',
-      badgeBg: 'bg-rose-500/10 text-rose-300 border-rose-500/20',
-      btnText: 'text-rose-400 group-hover:text-rose-300'
+      bgDark: 'from-rose-500/10 to-pink-600/5 bg-slate-900/80 border-rose-500/20 hover:border-rose-500/50',
+      bgLight: 'from-rose-50/80 to-white bg-white border-slate-200 hover:border-rose-300 hover:shadow-rose-500/10',
+      iconBg: 'bg-rose-500/20 text-rose-500',
+      badgeBgDark: 'bg-rose-500/10 text-rose-300 border-rose-500/20',
+      badgeBgLight: 'bg-rose-100 text-rose-700 border-rose-200',
+      btnText: 'text-rose-600 hover:text-rose-700'
     }
   };
 
@@ -53,7 +63,9 @@ export default function FeatureCard({ title, description, icon: Icon, badge, col
   return (
     <div 
       onClick={onClick}
-      className={`group relative rounded-2xl p-6 bg-slate-900/80 bg-gradient-to-br ${style.bg} border ${style.border} glass-card-hover cursor-pointer transition-all duration-300 flex flex-col justify-between`}
+      className={`group relative rounded-2xl p-6 bg-gradient-to-br border cursor-pointer transition-all duration-300 flex flex-col justify-between shadow-lg hover:shadow-xl hover:-translate-y-1 ${
+        isDark ? style.bgDark : style.bgLight
+      }`}
     >
       <div>
         {/* Header with icon & badge */}
@@ -62,25 +74,31 @@ export default function FeatureCard({ title, description, icon: Icon, badge, col
             {Icon && <Icon className="w-6 h-6" />}
           </div>
           {badge && (
-            <span className={`text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full border ${style.badgeBg}`}>
+            <span className={`text-[11px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full border ${
+              isDark ? style.badgeBgDark : style.badgeBgLight
+            }`}>
               {badge}
             </span>
           )}
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-white mb-2.5 group-hover:text-white transition-colors">
+        <h3 className={`text-xl font-bold mb-2.5 transition-colors ${
+          isDark ? 'text-white' : 'text-slate-900'
+        }`}>
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-slate-400 text-sm leading-relaxed mb-6">
+        <p className={`text-sm leading-relaxed mb-6 ${
+          isDark ? 'text-slate-400' : 'text-slate-600'
+        }`}>
           {description}
         </p>
       </div>
 
       {/* Footer Link */}
-      <div className={`pt-2 flex items-center text-sm font-semibold ${style.btnText} gap-1.5`}>
+      <div className={`pt-2 flex items-center text-sm font-bold ${style.btnText} gap-1.5`}>
         <span>Explore Solution</span>
         <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </div>
