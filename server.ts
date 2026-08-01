@@ -84,7 +84,7 @@ IMPORTANT: Respond ONLY with a valid JSON object matching this exact structure (
 `;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.5-flash",
       contents: prompt,
       config: {
         temperature: 0.7,
@@ -140,7 +140,7 @@ Respond ONLY with a valid JSON object matching this structure:
 `;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.5-flash",
       contents: prompt,
       config: {
         temperature: 0.7,
@@ -179,7 +179,7 @@ app.post('/api/gemini/chat', async (req, res) => {
   console.error("MODEL LIST ERROR:", e);
 }
     const chat = ai.chats.create({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.5-flash",
       config: {
         systemInstruction: `You are GrowthBot AI, an encouraging and highly knowledgeable expert Digital Business Growth Advisor.
 Help small business owners grow revenue through modern AI tools, high-converting websites, WhatsApp automation, local SEO, and social media marketing.
