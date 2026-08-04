@@ -92,7 +92,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className={`font-bold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>Email Inquiries</p>
-                  <p className="font-mono text-cyan-500 font-semibold mt-0.5">growth@aistudio.dev</p>
+                  <p className="font-mono text-cyan-500 font-semibold mt-0.5">abcd@gmail.com</p>
                   <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Response within 2 hours</p>
                 </div>
               </div>

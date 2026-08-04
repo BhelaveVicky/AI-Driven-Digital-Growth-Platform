@@ -206,9 +206,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:growth@aistudio.dev" className={`flex items-center gap-2.5 transition-colors hover:text-cyan-500 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                <a href="mailto:abcd@gmail.com" className={`flex items-center gap-2.5 transition-colors hover:text-cyan-500 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                   <Mail className="w-4 h-4 text-cyan-500 shrink-0" />
-                  <span>growth@aistudio.dev</span>
+                  <span>abcd@gmail.com</span>
                 </a>
               </li>
               <li className={`flex items-center gap-2.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
